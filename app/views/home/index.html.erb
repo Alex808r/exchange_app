@@ -1,0 +1,27 @@
+<div id="graph"></div>
+
+<div class="text-center">
+  <%= link_to 'К таблице', table_path %>
+</div>
+
+
+<script>
+  let dates = <%= @graph_data.map { |graph| graph[:date] }.to_json.html_safe %>;
+  let rubToUsd = <%= @graph_data.map { |graph| graph[:rub_to_usd] }.to_json.html_safe %>;
+  let rubToEur = <%= @graph_data.map { |graph| graph[:rub_to_eur] }.to_json.html_safe %>;
+  let rubToCny = <%= @graph_data.map { |graph| graph[:rub_to_cny] }.to_json.html_safe %>;
+
+  let graph = c3.generate({
+    bindto: '#graph',
+    data: {
+      date: 'DATE',
+      columns: [
+        ['DATE'].concat(dates),
+        ['USD'].concat(rubToUsd),
+        ['EUR'].concat(rubToEur),
+        ['CNY'].concat(rubToCny)
+      ],
+      xFormat: '%d-%m-%y'
+    },
+  })
+</script>
