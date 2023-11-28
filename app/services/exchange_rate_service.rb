@@ -17,9 +17,9 @@ class ExchangeRateService
     if response.code == '200'
       xml_data = Nokogiri::XML(response.body)
 
-      rub_to_usd = xml_data.xpath("//Valute[@ID='R01235']/Value").text.to_f # RUB/USD
-      rub_to_eur = xml_data.xpath("//Valute[@ID='R01239']/Value").text.to_f # RUB/EUR
-      rub_to_cny = xml_data.xpath("//Valute[@ID='R01375']/Value").text.to_f # RUB/CNY
+      rub_to_usd = xml_data.xpath("//Valute[@ID='R01235']/Value").text.tr(',', '.').to_f
+      rub_to_eur = xml_data.xpath("//Valute[@ID='R01239']/Value").text.tr(',', '.').to_f
+      rub_to_cny = xml_data.xpath("//Valute[@ID='R01375']/Value").text.tr(',', '.').to_f
 
       ExchangeRate.create(date:,
                           rub_to_usd:,
